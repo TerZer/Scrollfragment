@@ -63,8 +63,10 @@ public class ImageAdapter extends PagerAdapter {
 
                 Ball ball = list.get(i);
 
+                imageView.setId(i);
+
                 imageView.setImageResource(ball.getDrawable());
-                container.addView(imageView, i,0);
+                container.addView(imageView, 100,100);
                 ballImanges.add(imageView);
             }
             else{
