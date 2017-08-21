@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,27 +20,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        DotSliderView dotslider = (DotSliderView) findViewById(R.id.dotslider);
 
-        ImageAdapter adapter = new ImageAdapter(this, getList() /*Test*/);
-        viewPager.setAdapter(adapter);
+        //Mygtuko paspaudimas
+        DotHandler handler = new DotHandler() {
+            @Override
+            public void onAction(ColoredDot dot) {
+                Toast.makeText(MainActivity.this.getBaseContext(), "pressed " + dot.getNumber(), Toast.LENGTH_SHORT).show();
+            }
+        };
 
-    }
-
-    public List<Ball> getList(){
-        List<Ball> list = new ArrayList<Ball>();
-
-        for(int i = 0;i < 10;i++){
-            Ball ball = new Ball(Color.GREEN, i);
-            list.add(ball);
+        //Test sukurimas
+        Random random = new Random();
+        List<ColoredDot> dots = new ArrayList<>();
+        for (int i = 1; i <= 32; i++) {
+            dots.add(new ColoredDot(i, random.nextBoolean(), handler));
         }
+        dotslider.setDots(dots);
 
-        for(int i = 10;i < 20;i++){
-            Ball ball = new Ball(Color.RED, i);
-            list.add(ball);
-        }
-
-        return list;
     }
 
 }
